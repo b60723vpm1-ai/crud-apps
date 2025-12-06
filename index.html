@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple CRUD App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 70%;
+            margin: auto;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+            width: 90%;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+
+       …
+[4:56 pm, 6/12/2025] Gopika: <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful CRUD App</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom right, #ffb3ea, #d4b5ff);
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            width: 80%;
+            margin: auto;
+            padding: 25px;  margin: 10px 0;
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid #d5c2ff;
+            background: #faf5ff;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #a26aff;
+            box-shadow: 0 0 8px rgba(17, 252, 68, 0.4);
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        #addBtn {
+            background-color: #a64cff;
+            color: white;
+        }
+
+        #addBtn:hover {
+            background-color: #8b2aff;
+            transform: scale(1.05);
+        }
+
+        #updateBtn {
+            background-color: #ff5bbd;
+            color: white;
+        }
+
+        #updateBtn:hover {
+            background-color: #ff3ea8;
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #b37cff;
+            color: white;
+            padding: 12px;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 12px;
+            background: #f9f3ff;
+            text-align: center;
+            color: #3c185c;
+        }
+
+        tr:nth-child(even) {
+            background: #f1e5ff;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .edit-btn {
+            background-color: #ff9b00;
+        }
+
+        .edit-btn:hover {
+            background-color: #e88a00;
+            transform: scale(1.05);
+        }
+
+        .delete-btn {
+            background-color: #ff4e6a;
+        }
+
+        .delete-btn:hover {
+            background-color: #e63754;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2> CRUD Application</h2>
+
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="text" id="email" placeholder="Enter Email">
+
+        <button id="addBtn" onclick="addData()">Add</button>
+        <button id="updateBtn" onclick="updateData()" style="display:none;">Update</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Sl No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let dataList = [];
+        let editIndex = -1;
+
+        function addData() {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+
+            if (name === "" || email === "") {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            dataList.push({ name, email });
+            displayData();
+
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+        }
+
+        function displayData() {
+            let tableBody = document.getElementById("tableBody");
+            tableBody.innerHTML = "";
+
+            dataList.forEach((item, index) => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.email}</td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="editData(${index})">Edit</button>
+                            <button class="action-btn delete-btn" onclick="deleteData(${index})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function deleteData(index) {
+            dataList.splice(index, 1);
+            displayData();
+        }
+
+        function editData(index) {
+            document.getElementById("name").value = dataList[index].name;
+            document.getElementById("email").value = dataList[index].email;
+
+            editIndex = index;
+
+            document.getElementById("addBtn").style.display = "none";
+            document.getElementById("updateBtn").style.display = "inline-block";
+        }
+
+        function updateData() {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+
+            dataList[editIndex] = { name, email };
+            displayData();
+
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+
+            document.getElementById("addBtn").style.display = "inline-block";
+            document.getElementById("updateBtn").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
