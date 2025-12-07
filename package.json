@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/b60723vpm1-ai/crud-apps#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.0.1"
   }
 }
